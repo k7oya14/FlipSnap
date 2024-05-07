@@ -8,6 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - run : cd apps/web
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Setup Node
