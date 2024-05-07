@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "scheme.md"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/d/migrate-shado
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Post {
+  id        String    @id @default(uuid())
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  imgFront  String
+  imgBack   String
+  caption   String
+  createdAt DateTime  @default(now())
+  comments  Comment[]
+  likes     Like[]
+
+  @@index([authorId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model User {
+  id            String              @id @default(cuid())
+  username      String?             @unique
+  email         String?             @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  name          String?
+  bio           String              @default("")
+  created_at    DateTime            @default(now())
+  following     User_User_Follows[] @relation("Following")
+  followedBy    User_User_Follows[] @relation("FollowedBy")
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+}
+
+model User_User_Follows {
+  followerId String
+  followeeId String
+  follower   User     @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  followee   User     @relation("FollowedBy", fields: [followeeId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@id([followerId, followeeId])
+  @@index([followerId, createdAt(sort: Desc)])
+  @@index([followeeId, createdAt(sort: Desc)])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([postId, createdAt(sort: Desc)])
+}
+
+model Like {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, postId])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([postId])
+}

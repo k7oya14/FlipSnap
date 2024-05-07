@@ -1,0 +1,20 @@
+name: Seed
+on:
+  workflow_dispatch:
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - run: npm run build
+      - name: Running seed command
+        run: npx prisma db seed
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
