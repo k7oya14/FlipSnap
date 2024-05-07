@@ -2,6 +2,10 @@ name: Seed
 on:
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: apps/web
+
 jobs:
   seed:
     runs-on: ubuntu-latest
