@@ -3,16 +3,18 @@ on:
   push:
     branches:
       - main
+    paths:
+      - apps/web
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - run : cd apps/web
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
+      - run: cd apps/web
       - name: Install dependencies
         run: npm install
       - run: npm run build
