@@ -1,6 +1,6 @@
 <p align="center">
     <img src="assets/logo.png" height="128"/>
-    <h1 align="center">FlipSnap</h1>
+    <h1 align="center">FlipSnap by HiKs</h1>
     <p align="center">
     Two Sides, One Post. Share the Moment Behind the Moment.
     </p>
@@ -16,6 +16,7 @@ Welcome to FlipSnap, the photo-sharing social networking service that redefines 
 
 # Authors
 A list of the original co-authors.
+From team HiKs
 - 坂　功弥 (Koya Saka) - Backend - [@k7oya14](https://github.com/k7oya14)
 - 石渡　輝(Hikaru Ishiwata) - Frontend - [@hishiwat](https://github.com/hishiwat)
 
