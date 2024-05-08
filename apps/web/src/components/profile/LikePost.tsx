@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Post } from "@/lib/definitions";
 import HomeFlipImage from "../home/HomeFlipImage";
 import LikePostImageFront from "./LikePostImageFront";
@@ -9,7 +9,7 @@ type Props = {
   myId: string | undefined;
 };
 
-const LikePost = function LikePost(props: Props) {
+const LikePost = memo(function LikePost(props: Props) {
   const { post, index, myId } = props;
   return (
     <HomeFlipImage
@@ -23,6 +23,6 @@ const LikePost = function LikePost(props: Props) {
       frontComponent={<LikePostImageFront index={index} post={post} />}
     />
   );
-};
+});
 
 export default LikePost;
