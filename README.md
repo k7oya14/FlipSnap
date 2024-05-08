@@ -16,9 +16,9 @@ Welcome to FlipSnap, the photo-sharing social networking service that redefines 
 
 # Authors
 A list of the original co-authors.
-From team HiKs
-- 坂　功弥 (Koya Saka) - Backend - [@k7oya14](https://github.com/k7oya14)
-- 石渡　輝(Hikaru Ishiwata) - Frontend - [@hishiwat](https://github.com/hishiwat)
+- team HiKs
+    - 坂　功弥 (Koya Saka) - Backend - [@k7oya14](https://github.com/k7oya14)
+    - 石渡　輝(Hikaru Ishiwata) - Frontend - [@hishiwat](https://github.com/hishiwat)
 
 # History
 This repo supersedes the legacy version, [FlipSnap (Legacy)](https://github.com/k7oya14/flipsnap-legacy).
