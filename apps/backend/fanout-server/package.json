@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx ts-node ./app/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.7",
     "@types/node": "^20.12.11",
     "prisma": "^5.13.0",
     "ts-node": "^10.9.2",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
-    "@prisma/extension-pulse": "^1.0.2"
+    "@prisma/extension-pulse": "^1.0.2",
+    "ioredis": "^5.4.1"
   }
 }
