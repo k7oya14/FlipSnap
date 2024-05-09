@@ -8,7 +8,7 @@ async function main() {
 
   for await (const event of subscription) {
     const userInfo = await fetchUserInfo(event.created.authorId);
-    const post = {...event.created, author: userInfo};
+    const post = { ...event.created, author: userInfo };
     console.log(post);
   }
 }
