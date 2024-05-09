@@ -62,7 +62,7 @@ const SpHomeNew = async (props: Props) => {
             </Link>
             <Link href={`/posts/${post.id}`} scroll={false} className="p-[6px]">
               <ExpandIcon
-                className={`size-[29px] text-neutral-800 text-light`}
+                className={`size-[29px] text-neutral-400 text-light`}
               />
             </Link>
           </div>
