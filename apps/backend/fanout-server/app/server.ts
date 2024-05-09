@@ -14,7 +14,7 @@ async function main() {
   for await (const event of subscription) {
     const userInfo = await fetchUserInfo(event.created.authorId);
     const data = { ...event.created, author: userInfo };
-    console.log(data);
+    console.log("received new post :", "id:"+data.id+",", "author:"+data.author?.name+",", "caption:"+data.caption);
     await redis.lpush("user-list", JSON.stringify(data));
   }
 }
