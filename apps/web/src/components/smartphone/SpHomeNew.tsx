@@ -11,7 +11,7 @@ import SpHome from "./SpHome";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Image from "next/image";
-import { Expand } from "lucide-react";
+import { Expand, ExpandIcon } from "lucide-react";
 
 type Props = {
   firstPosts: GalleyPost[];
@@ -47,7 +47,7 @@ const SpHomeNew = async (props: Props) => {
               />
             }
           />
-          <div className="flex items-center justify-between px-1 py-1 bg-gradient-to-tr from-blue-100 to-purple-100 rounded-b">
+          <div className="flex items-center justify-between px-1 py-1 bg-white rounded-b">
             <Link
               href={`/profile/${post.author?.username}`}
               className={`flex items-center space-x-2 `}
@@ -56,11 +56,11 @@ const SpHomeNew = async (props: Props) => {
                 <AvatarImage src={post.author?.image!} />
                 <AvatarFallback>{post.author?.name}</AvatarFallback>
               </Avatar>
-              <p className="text-xl font-semibold">{post.author?.name}</p>
+              <p className="text-lg">{post.author?.name}</p>
             </Link>
             <Link href={`/posts/${post.id}`} scroll={false} className="p-[6px]">
-              <Expand
-                className={`size-[29px] text-neutral-800 hover:scale-110 transition duration-200 ease-in-out`}
+              <ExpandIcon
+                className={`size-[29px] text-neutral-800 text-light hover:scale-110 transition duration-200 ease-in-out`}
               />
             </Link>
           </div>
