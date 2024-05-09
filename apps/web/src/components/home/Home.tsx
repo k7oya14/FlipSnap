@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { fetchLatestPosts } from "@/lib/fetch";
 import { GalleyPost } from "@/lib/definitions";
 import HomeGallery from "./HomeGallery";
+import SpHomeNew from "../smartphone/SpHomeNew";
 
 const Home = async () => {
   const session = await auth();
@@ -15,7 +16,8 @@ const Home = async () => {
   return (
     <>
       <div className="block sm:hidden">
-        <SpHome me={session?.user} firstPosts={firstPosts} />
+        {/* <SpHome me={session?.user} firstPosts={firstPosts} /> */}
+        <SpHomeNew me={session?.user} firstPosts={firstPosts} />
       </div>
       <div className="hidden sm:flex flex-col justify-center items-center">
         <HomeGallery
