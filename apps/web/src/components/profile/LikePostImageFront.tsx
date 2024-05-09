@@ -52,18 +52,18 @@ const LikePostImageFront = (props: Props) => {
       />
       <div className="absolute inset-x-0 bottom-0 h-full w-full transition-opacity duration-300 hover:bg-gradient-to-b from-transparent to-zinc-800 rounded-b">
         <StopPropagationDiv>
-          <Link
-            href={`/profile/${post.author?.username}`}
-            className={`absolute bottom-2 left-2 invisible flex items-center space-x-2 text-slate-200 ${
-              isMobile ? "" : "group-hover:visible"
-            }`}
-          >
-            <Avatar>
-              <AvatarImage src={post.author?.image!} />
-              <AvatarFallback>{post.author?.name}</AvatarFallback>
-            </Avatar>
-            <p className="text-lg">{post.author?.name}</p>
-          </Link>
+          {isMobile && (
+            <Link
+              href={`/profile/${post.author?.username}`}
+              className={`absolute bottom-2 left-2 invisible flex items-center space-x-2 text-slate-200 group-hover:visible`}
+            >
+              <Avatar>
+                <AvatarImage src={post.author?.image!} />
+                <AvatarFallback>{post.author?.name}</AvatarFallback>
+              </Avatar>
+              <p className="text-lg">{post.author?.name}</p>
+            </Link>
+          )}
           <Link
             href={`/posts/${post.id}`}
             scroll={false}
