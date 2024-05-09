@@ -45,7 +45,7 @@ const ImageFront = function ImageFront(props: Props) {
           alt=""
           src={post.imgFront}
         />
-        <div className="absolute inset-x-0 bottom-0 h-full w-full via-transparent bg-gradient-to-b from-transparent to-zinc-800 rounded-b">
+        <div className="absolute inset-x-0 bottom-0 h-full w-full hover:bg-gradient-to-b from-60% from-transparent to-zinc-800 rounded-b">
           <StopPropagationDiv>
             <Link
               href={`/profile/${post.author?.username}`}
