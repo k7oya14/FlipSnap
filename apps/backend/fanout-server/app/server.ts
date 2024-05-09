@@ -5,6 +5,8 @@ import Redis from "ioredis";
 const redis = new Redis(process.env.REDIS_URL!);
 
 async function main() {
+  console.log("Listening for new posts...")
+
   const subscription = await prisma.post.subscribe({
     create: {},
   });
@@ -12,7 +14,7 @@ async function main() {
   for await (const event of subscription) {
     const userInfo = await fetchUserInfo(event.created.authorId);
     const data = { ...event.created, author: userInfo };
-    console.log(data)
+    console.log(data);
     await redis.lpush("user-list", JSON.stringify(data));
   }
 }
