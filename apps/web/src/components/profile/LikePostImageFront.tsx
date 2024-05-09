@@ -35,7 +35,7 @@ const LikePostImageFront = (props: Props) => {
         className={
           isMobile
             ? ""
-            : "absolute inset-0 bg-black opacity-0 transition-opacity duration-500 group-hover:opacity-40"
+            : "absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-40"
         }
       />
       <Image
@@ -50,11 +50,11 @@ const LikePostImageFront = (props: Props) => {
         }}
         width="293"
       />
-      <div className="absolute inset-x-0 bottom-0 h-full w-full">
+      <div className="absolute inset-x-0 bottom-0 h-full w-full transition-opacity duration-300 hover:bg-gradient-to-b from-transparent to-zinc-800 rounded-b">
         <StopPropagationDiv>
           <Link
             href={`/profile/${post.author?.username}`}
-            className={`absolute bottom-2 left-2 invisible flex items-center space-x-2 text-slate-200${
+            className={`absolute bottom-2 left-2 invisible flex items-center space-x-2 text-slate-200 ${
               isMobile ? "" : "group-hover:visible"
             }`}
           >

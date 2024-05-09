@@ -11,6 +11,7 @@ import { Camera } from "lucide-react";
 import PostButton from "./PostButton";
 import CropImage from "./CropImage";
 import AspectRatioButton from "./AspectRatioButton";
+import { MotionDiv } from "../MotionDiv";
 
 const robotoSlab = Roboto_Slab({ weight: "400", subsets: ["latin"] });
 
@@ -35,7 +36,7 @@ function CreatePostForm({ userId }: { userId: string }) {
         <h1 className="text-xl">Create Post</h1>
         <Camera className="w-8 h-8 text-black" />
       </CardHeader>
-      <CardContent className="p-0 h-[310px] w-full px-4">
+      <CardContent className="p-0 h-[310px] w-full px-5">
         <form
           action={(formData) => {
             if (!imgFront || !imgBack) return;
@@ -48,7 +49,11 @@ function CreatePostForm({ userId }: { userId: string }) {
           {aspectRatio === 0 ? (
             <AspectRatioButton handleAspectChange={handleAspectChange} />
           ) : (
-            <>
+            <MotionDiv
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
               <div className="mb-4">
                 <Label className="ml-[2px]" htmlFor="imgFront">
                   Front Image
@@ -106,7 +111,7 @@ function CreatePostForm({ userId }: { userId: string }) {
                     ))}
                 </div>
               </div>
-            </>
+            </MotionDiv>
           )}
           <div className="absolute bottom-3 w-full">
             <PostButton imgFront={imgFront} imgBack={imgBack} />
