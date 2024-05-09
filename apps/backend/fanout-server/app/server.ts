@@ -15,7 +15,9 @@ async function main() {
     const userInfo = await fetchUserInfo(event.created.authorId);
     const data = { ...event.created, author: userInfo };
     console.log("received new post :", "id:"+data.id+",", "author:"+data.author?.name+",", "caption:"+data.caption);
-    await redis.lpush("user-list", JSON.stringify(data));
+
+    await redis.lpush("latest-posts", JSON.stringify(data));
+    await redis.ltrim("latest-posts", 0, 63);
   }
 }
 
