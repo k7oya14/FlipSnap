@@ -24,7 +24,7 @@ const SpHomeNew = async (props: Props) => {
   return (
     <div>
       {firstPosts.map((post: GalleyPost) => (
-        <Card key={post.id} className="mb-4 m-2 rounded shadow-xl">
+        <Card key={post.id} className="mb-4 m-2  shadow-xl">
           <HomeFlipImage
             post={post}
             myId={me?.id}
@@ -40,6 +40,8 @@ const SpHomeNew = async (props: Props) => {
                   objectFit: "cover",
                   width: "100%",
                   height: "auto",
+                  borderTopLeftRadius: "4px",
+                  borderTopRightRadius: "4px",
                 }}
                 className="rounded-t"
                 width={500}
@@ -60,7 +62,7 @@ const SpHomeNew = async (props: Props) => {
             </Link>
             <Link href={`/posts/${post.id}`} scroll={false} className="p-[6px]">
               <ExpandIcon
-                className={`size-[29px] text-neutral-800 text-light hover:scale-110 transition duration-200 ease-in-out`}
+                className={`size-[29px] text-neutral-800 text-light`}
               />
             </Link>
           </div>
