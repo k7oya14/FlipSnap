@@ -46,28 +46,17 @@ async function main() {
 
     let i = 0;
     while (i < count) {
-      const posts = await fetchLatestPosts(64, i);
-      if (!posts) {
+      const data = await fetchLatestPosts(64, i);
+      if (!data) {
         break;
       } else {
-        i += posts.length;
+        i += data.length;
       }
 
-      for (const post of posts) {
-        // Push the new post to the Global timeline
-        await redis.lpush("timeline", JSON.stringify(post));
-        await redis.ltrim("timeline", 0, 63);
-
-        // Push the new post to the Follower's timeline
-        const followers = await fetchFollowers(post?.authorId ?? "");
-        for (const follower of followers) {
-          await redis.lpushx(
-            `timeline:user:${follower.id}`,
-            JSON.stringify(post)
-          );
-          await redis.ltrim(`timeline:user:${follower.id}`, 0, 63);
-        }
-      }
+      //jsonを文字列に変換して，最後にまとめてredisの同一リストにまとめてpush
+      const posts = data.map((post) => JSON.stringify(post));
+      await redis.lpush("timeline", ...posts);
+      await redis.ltrim("timeline", 0, 63);
     }
     console.log("Seeding completed!");
   } catch (error) {

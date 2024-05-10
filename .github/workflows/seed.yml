@@ -23,6 +23,7 @@ jobs:
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
 
   seed-redis:
+    needs: seed-postgres
     runs-on: ubuntu-latest
     defaults:
       run:
