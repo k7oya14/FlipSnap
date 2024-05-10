@@ -36,40 +36,46 @@ export async function fetchLatestPosts(take: number, skip: number) {
 }
 
 async function main() {
-  console.log("Seeding the Redis database with Postgres data...");
+  try {
+    console.log("Seeding the Redis database with Postgres data...");
 
-  // Delete all k-V in the Redis database
-  await redis.flushall();
+    // Delete all k-V in the Redis database
+    await redis.flushall();
 
-  const count = await fetchCountPosts(0);
+    const count = await fetchCountPosts(0);
 
-  let i = 0;
-  while (i < count) {
-    const posts = await fetchLatestPosts(64, i);
-    if (!posts) {
-      break;
-    } else {
-      i += posts.length;
-    }
+    let i = 0;
+    while (i < count) {
+      const posts = await fetchLatestPosts(64, i);
+      if (!posts) {
+        break;
+      } else {
+        i += posts.length;
+      }
 
-    for (const post of posts) {
-      // Push the new post to the Global timeline
-      await redis.lpush("timeline", JSON.stringify(post));
-      await redis.ltrim("timeline", 0, 63);
+      for (const post of posts) {
+        // Push the new post to the Global timeline
+        await redis.lpush("timeline", JSON.stringify(post));
+        await redis.ltrim("timeline", 0, 63);
 
-      // Push the new post to the Follower's timeline
-      const followers = await fetchFollowers(post?.authorId ?? "");
-      for (const follower of followers) {
-        await redis.lpushx(
-          `timeline:user:${follower.id}`,
-          JSON.stringify(post)
-        );
-        await redis.ltrim(`timeline:user:${follower.id}`, 0, 63);
+        // Push the new post to the Follower's timeline
+        const followers = await fetchFollowers(post?.authorId ?? "");
+        for (const follower of followers) {
+          await redis.lpushx(
+            `timeline:user:${follower.id}`,
+            JSON.stringify(post)
+          );
+          await redis.ltrim(`timeline:user:${follower.id}`, 0, 63);
+        }
       }
     }
+    console.log("Seeding completed!");
+  } catch (error) {
+    console.error(error);
   }
-  console.log("Seeding completed!");
-  return 0;
 }
 
-main();
+main().finally(async () => {
+  await prisma.$disconnect();
+  await redis.quit();
+});

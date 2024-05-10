@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx ts-node ./app/server.ts"
+    "start": "npx ts-node ./app/server.ts",
+    "seed": "ts-node ./app/seed.ts"
   },
   "keywords": [],
   "author": "",
