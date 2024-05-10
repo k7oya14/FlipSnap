@@ -1,7 +1,7 @@
 import { Redis } from "@upstash/redis/cloudflare";
 import { Handler } from "hono";
 
-export const timeline: Handler = async (c) => {
+export const GetTimeline: Handler = async (c) => {
   const take = c.req.query("skip") ? Number(c.req.query("take")) : 0;
   const skip = c.req.query("skip") ? Number(c.req.query("skip")) : 0;
   const myId = c.req.query("myId");

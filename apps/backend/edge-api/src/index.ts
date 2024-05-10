@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { timeline } from "./lib/timeline";
+import { GetTimeline } from "./lib/GetTimeline";
 
 export type Env = {
   UPSTASH_REDIS_REST_URL: string;
@@ -8,6 +8,6 @@ export type Env = {
 
 const app = new Hono<{ Bindings: Env }>();
 
-app.get("/timeline", timeline);
+app.get("/timeline", GetTimeline);
 
 export default app;
