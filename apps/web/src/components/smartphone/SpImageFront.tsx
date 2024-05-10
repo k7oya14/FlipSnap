@@ -2,14 +2,14 @@ import Image from "next/image";
 import React, { memo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
-import { GalleyPost, sessionUser } from "@/lib/definitions";
+import { Post, sessionUser } from "@/lib/definitions";
 import StopPropagationDiv from "../StopPropagationDiv";
 import { SpPostInfoDrawer } from "./SpPostInfoDrawer";
 
 type Props = {
   me: sessionUser | undefined;
   index: number;
-  post: GalleyPost;
+  post: Post;
 };
 
 const SpImageFront = memo(function SpImageFront(props: Props) {
@@ -44,9 +44,9 @@ const SpImageFront = memo(function SpImageFront(props: Props) {
             </Avatar>
             <p className="text-lg">{post.author?.name}</p>
           </Link>
-          <div className="absolute bottom-1 right-[6px]">
-            <SpPostInfoDrawer postId={post.id} me={me} />
-          </div>
+          {/* <div className="absolute bottom-1 right-[6px]"> */}
+          <SpPostInfoDrawer postId={post.id} me={me} />
+          {/* </div> */}
         </StopPropagationDiv>
       </div>
     </div>
