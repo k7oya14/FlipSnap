@@ -39,6 +39,11 @@ const IconDropDown = ({ user }: { user: sessionUser }) => {
             My profile
           </DropdownMenuItem>
         </Link>
+        <Link href="/timeline" prefetch={false}>
+          <DropdownMenuItem className="hover:cursor-pointer flex justify-center">
+            Timeline
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuItem className="hover:cursor-pointer flex justify-center">
           <button onClick={() => signOut()}>Sign out</button>
         </DropdownMenuItem>

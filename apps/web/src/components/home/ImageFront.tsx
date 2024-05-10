@@ -3,13 +3,13 @@ import Image from "next/image";
 import React, { memo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
-import { GalleyPost } from "@/lib/definitions";
 import StopPropagationDiv from "../StopPropagationDiv";
 import { MotionDiv } from "../MotionDiv";
+import { Post } from "@/lib/definitions";
 
 type Props = {
   index: number;
-  post: GalleyPost;
+  post: Post;
 };
 
 const ImageFront = memo(function ImageFront(props: Props) {

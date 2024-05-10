@@ -30,27 +30,6 @@ export type Post = {
   createdAt: Date;
 };
 
-export type GalleyPost = {
-  isLikedByMe: boolean;
-  likes: {
-    createdAt: Date;
-  }[];
-  _count: {
-    likes: number;
-  };
-  author?: {
-    image: string | null;
-    name: string | null;
-    username: string | null;
-  };
-  id: string;
-  authorId: string;
-  imgFront: string;
-  imgBack: string;
-  caption: string;
-  createdAt: Date;
-};
-
 export type OnePost =
   | {
       author: {

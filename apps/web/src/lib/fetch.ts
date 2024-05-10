@@ -293,17 +293,16 @@ export async function fetchMoreLatestPosts(
 export async function fetchTimeline(
   take: number,
   skip?: number,
-  myId?: string | undefined
+  userId?: string | undefined
 ) {
   const url = new URL("https://flipsnap_edge_api.k7oya14.workers.dev/timeline");
   url.searchParams.set("take", take.toString());
   if (skip) {
     url.searchParams.set("skip", skip.toString());
   }
-  if (myId) {
-    url.searchParams.set("myId", myId);
+  if (userId) {
+    url.searchParams.set("userId", userId);
   }
-
   noStore();
   try {
     console.log(url.toString());

@@ -1,26 +1,24 @@
 "use client";
 
-import { useCursorById } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { BadgeCheck } from "lucide-react";
 import { Card } from "../ui/card";
-import { fetchMoreLatestPosts } from "@/lib/fetch";
-import { GalleyPost, sessionUser } from "@/lib/definitions";
+import { fetchTimeline } from "@/lib/fetch";
+import { Post, sessionUser } from "@/lib/definitions";
 import HomeFlipImage from "../home/HomeFlipImage";
 import SpImageFront from "./SpImageFront";
 
 type Props = {
-  cursorId: string;
+  timeline: boolean;
+  skip: number;
   me: sessionUser | undefined;
 };
 
 const SpHomeLoadMore = (props: Props) => {
-  const { cursorId, me } = props;
-  const { cursorById } = useCursorById();
-  const [posts, setPosts] = useState<GalleyPost[]>([]);
+  const { timeline, skip, me } = props;
+  const [posts, setPosts] = useState<Post[]>([]);
   const [postLimit, setPostLimit] = useState(false);
-  const [cursorPostId, setCursorPostId] = useState(cursorId);
   const [loading, setLoading] = useState(false);
   const { ref, inView } = useInView({
     threshold: 0,
@@ -31,12 +29,16 @@ const SpHomeLoadMore = (props: Props) => {
     if (inView && !postLimit) {
       const fetchMorePosts = async () => {
         setLoading(true);
-        const newPosts = await fetchMoreLatestPosts(6, cursorPostId);
+        let newPosts;
+        if (timeline) {
+          newPosts = await fetchTimeline(6, skip + posts.length, me?.id);
+        } else {
+          newPosts = await fetchTimeline(6, skip + posts.length);
+        }
         if (newPosts.length < 6) {
           setPostLimit(true);
         }
         setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-        setCursorPostId(cursorById(newPosts));
         setLoading(false);
       };
       fetchMorePosts();
@@ -45,7 +47,7 @@ const SpHomeLoadMore = (props: Props) => {
 
   return (
     <div>
-      {posts.map((post: GalleyPost, index) => (
+      {posts.map((post: Post, index) => (
         <div key={post.id} className="rounded-3xl m-2 shadow-lg">
           <HomeFlipImage
             post={post}

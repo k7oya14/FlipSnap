@@ -1,21 +1,20 @@
 import React from "react";
 import SpHomeLoadMore from "./SpHomeLoadMore";
-import { GalleyPost, sessionUser } from "@/lib/definitions";
-import { useCursorById } from "@/lib/utils";
+import { Post, sessionUser } from "@/lib/definitions";
 import HomeFlipImage from "../home/HomeFlipImage";
 import SpImageFront from "./SpImageFront";
 
 type Props = {
-  firstPosts: GalleyPost[];
+  timeline: boolean;
+  firstPosts: Post[];
   me: sessionUser | undefined;
 };
 
 const SpHome = async (props: Props) => {
-  const { firstPosts, me } = props;
-  const { cursorById } = useCursorById();
+  const { timeline, firstPosts, me } = props;
   return (
     <div>
-      {firstPosts.map((post: GalleyPost, index) => (
+      {firstPosts.map((post: Post, index) => (
         <div key={post.id} className="rounded-3xl m-2 shadow-lg">
           <HomeFlipImage
             post={post}
@@ -29,7 +28,7 @@ const SpHome = async (props: Props) => {
           />
         </div>
       ))}
-      <SpHomeLoadMore cursorId={cursorById(firstPosts)} me={me} />
+      <SpHomeLoadMore timeline={timeline} skip={firstPosts.length} me={me} />
     </div>
   );
 };
