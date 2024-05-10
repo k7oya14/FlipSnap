@@ -53,7 +53,6 @@ async function main() {
         i += data.length;
       }
 
-      //jsonを文字列に変換して，最後にまとめてredisの同一リストにまとめてpush
       const posts = data.map((post) => JSON.stringify(post));
       await redis.lpush("timeline", ...posts);
       await redis.ltrim("timeline", 0, 63);
