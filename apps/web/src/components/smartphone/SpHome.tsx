@@ -15,14 +15,13 @@ const SpHome = async (props: Props) => {
   return (
     <div>
       {firstPosts.map((post: Post, index) => (
-        <div key={post.id} className="rounded-3xl m-2 shadow-lg">
+        <div key={post.id} className="rounded-3xl m-2">
           <HomeFlipImage
             post={post}
             myId={me?.id}
             containerStyle={{
               width: "100%",
               height: "auto",
-              borderRadius: "0.5rem",
             }}
             frontComponent={<SpImageFront index={index} post={post} me={me} />}
           />
