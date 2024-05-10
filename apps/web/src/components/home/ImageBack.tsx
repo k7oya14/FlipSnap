@@ -1,10 +1,10 @@
 import Image from "next/image";
 import React from "react";
 import LockedBack from "../LockedBack";
-import { GalleyPost, Post, UserRelationship } from "@/lib/definitions";
+import {  Post, UserRelationship } from "@/lib/definitions";
 
 type Props = {
-  post: GalleyPost | Post;
+  post:  Post;
   myId: string | undefined | null;
   relationship: UserRelationship;
   loading?: boolean;

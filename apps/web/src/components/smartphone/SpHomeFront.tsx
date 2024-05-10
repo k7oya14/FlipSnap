@@ -1,15 +1,13 @@
-import { GalleyPost } from "@/lib/definitions";
 import { Expand } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import StopPropagationDiv from "../StopPropagationDiv";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card } from "../ui/card";
+import { Post } from "@/lib/definitions";
 
 type Props = {
   index: number;
-  post: GalleyPost;
+  post: Post;
 };
 
 const SpHomeFront = (props: Props) => {

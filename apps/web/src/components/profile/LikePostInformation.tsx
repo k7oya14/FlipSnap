@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { isMobile } from "react-device-detect";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { GalleyPost, Post } from "@/lib/definitions";
+import { Post } from "@/lib/definitions";
 
-type Props = { post: Post | GalleyPost };
+type Props = { post: Post };
 
 const LikePostInformation = (props: Props) => {
   const { post } = props;
