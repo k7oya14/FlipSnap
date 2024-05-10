@@ -2,13 +2,12 @@ name: Seed
 on:
   workflow_dispatch:
 
-defaults:
-  run:
-    working-directory: apps/web
-
 jobs:
-  seed:
+  seed-postgres:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -22,3 +21,24 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
+
+  seed-redis:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/backend/fanout-server
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - run: npm run build
+      - name: Running seed command
+        run: npm run seed
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+          PULSE_API_KEY: ${{ secrets.PULSE_API_KEY }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}

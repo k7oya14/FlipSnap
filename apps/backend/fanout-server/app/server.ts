@@ -1,11 +1,9 @@
-import { prisma } from "./prisma"; // import your extended Prisma Client instance
-import { fetchUserInfo } from "./utils";
-import Redis from "ioredis";
-
-const redis = new Redis(process.env.REDIS_URL!);
+import { prisma } from "./lib/prisma";
+import { redis } from "./lib/redis";
+import { fetchFollowers, fetchUserInfo } from "./lib/utils";
 
 async function main() {
-  console.log("Listening for new posts...")
+  console.log("Listening for new posts...");
 
   const subscription = await prisma.post.subscribe({
     create: {},
@@ -14,10 +12,23 @@ async function main() {
   for await (const event of subscription) {
     const userInfo = await fetchUserInfo(event.created.authorId);
     const data = { ...event.created, author: userInfo };
-    console.log("received new post :", "id:"+data.id+",", "author:"+data.author?.name+",", "caption:"+data.caption);
+    console.log(
+      "received new post :",
+      "id:" + data.id + ",",
+      "author:" + data.author?.name + ",",
+      "caption:" + data.caption
+    );
 
-    await redis.lpush("latest-posts", JSON.stringify(data));
-    await redis.ltrim("latest-posts", 0, 63);
+    // Push the new post to the Global timeline
+    await redis.lpush("timeline", JSON.stringify(data));
+    await redis.ltrim("timeline", 0, 63);
+
+    // Push the new post to the Follower's timeline
+    const followers = await fetchFollowers(event.created.authorId);
+    for (const follower of followers) {
+      await redis.lpushx(`timeline:user:${follower.id}`, JSON.stringify(data));
+      await redis.ltrim(`timeline:user:${follower.id}`, 0, 63);
+    }
   }
 }
 
