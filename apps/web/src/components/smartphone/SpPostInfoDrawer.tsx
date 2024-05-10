@@ -107,7 +107,10 @@ export const SpPostInfoDrawer = (props: Props) => {
                 </div>
               </>
             ) : (
-              <Skeleton className="h-3 w-2/3" />
+              <>
+                <Skeleton className="h-3 w-full mb-1" />
+                <Skeleton className="h-3 w-2/3 mb-10" />
+              </>
             )}
           </DrawerTitle>
         </DrawerHeader>

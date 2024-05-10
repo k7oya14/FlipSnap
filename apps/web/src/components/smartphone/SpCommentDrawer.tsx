@@ -27,7 +27,6 @@ type Props = {
 export const SpCommentDrawer = (props: Props) => {
   const { latestComments = [], postId, me } = props;
   const { cursorById } = useCursorById();
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState<Comment[]>(latestComments);
   const [optimisticComments, setOptimisticComments] =
@@ -62,7 +61,7 @@ export const SpCommentDrawer = (props: Props) => {
   }, [latestComments, postId]);
 
   return (
-    <Drawer open={open} onOpenChange={() => setOpen(false)}>
+    <Drawer>
       <DrawerTrigger
         onClick={fetchLatestCommnent}
         className="focus-visible:ring-transparent outline-none focus:ring-0 p-[6px]"
