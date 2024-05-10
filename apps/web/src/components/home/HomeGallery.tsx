@@ -5,7 +5,6 @@ import ImageFront from "./ImageFront";
 import { Post } from "@/lib/definitions";
 import { fetchTimeline } from "@/lib/fetch";
 import { useInView } from "react-intersection-observer";
-import { useCursorById } from "@/lib/utils";
 import HomeFlipImage from "./HomeFlipImage";
 
 type Props = {
@@ -15,7 +14,6 @@ type Props = {
 
 const HomeGallery = (props: Props) => {
   const { firstPosts, myId } = props;
-  const { cursorById } = useCursorById();
   const [posts, setPosts] = useState<Post[][]>(firstPosts);
   const [postLimit, setPostLimit] = useState(false);
   const { ref, inView } = useInView({

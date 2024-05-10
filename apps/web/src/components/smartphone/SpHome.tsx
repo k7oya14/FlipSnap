@@ -1,7 +1,6 @@
 import React from "react";
 import SpHomeLoadMore from "./SpHomeLoadMore";
 import { Post, sessionUser } from "@/lib/definitions";
-import { useCursorById } from "@/lib/utils";
 import HomeFlipImage from "../home/HomeFlipImage";
 import SpImageFront from "./SpImageFront";
 
@@ -12,7 +11,6 @@ type Props = {
 
 const SpHome = async (props: Props) => {
   const { firstPosts, me } = props;
-  const { cursorById } = useCursorById();
   return (
     <div>
       {firstPosts.map((post: Post, index) => (
