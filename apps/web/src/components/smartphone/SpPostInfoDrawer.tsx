@@ -72,7 +72,7 @@ export const SpPostInfoDrawer = (props: Props) => {
       >
         <Info className="size-[32px] text-neutral-300 hover:text-neutral-200 cursor-pointer" />
       </DrawerTrigger>
-      <DrawerContent className="focus-visible:ring-transparent outline-none focus:ring-0 h-[80vh]">
+      <DrawerContent className="focus-visible:ring-transparent outline-none focus:ring-0 h-[85vh]">
         <DrawerHeader className="pb-0">
           <DrawerTitle className="border-b border-gray-200 pb-1">
             {post ? (
@@ -112,7 +112,9 @@ export const SpPostInfoDrawer = (props: Props) => {
           </DrawerTitle>
         </DrawerHeader>
         <div
-          className={`overflow-y-scroll overflow-x-hidden ${me ? "mb-14" : ""}`}
+          className={`overflow-y-scroll dialog-scroll overflow-x-hidden ${
+            me ? "mb-14" : ""
+          }`}
         >
           {loading ? (
             [...Array(10)].map((_, i) => <OneCommentSkeleton key={i} />)
