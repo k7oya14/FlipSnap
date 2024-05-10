@@ -11,9 +11,9 @@ export async function fetchCountPosts(skip: number) {
   }
 }
 
-export async function fetchALatestPost(skip: number) {
+export async function fetchLatestPosts(take: number, skip: number) {
   try {
-    const data = await prisma.post.findFirst({
+    const data = await prisma.post.findMany({
       orderBy: {
         createdAt: "asc",
       },
@@ -26,6 +26,7 @@ export async function fetchALatestPost(skip: number) {
           },
         },
       },
+      take,
       skip,
     });
     return data;
@@ -35,25 +36,40 @@ export async function fetchALatestPost(skip: number) {
 }
 
 async function main() {
+  console.log("Seeding the Redis database with Postgres data...");
+
   // Delete all k-V in the Redis database
   await redis.flushall();
 
   const count = await fetchCountPosts(0);
 
-  for (let i = 0; i < count; i++) {
-    const post = await fetchALatestPost(i);
+  let i = 0;
+  while (i < count) {
+    const posts = await fetchLatestPosts(64, i);
+    if (!posts) {
+      break;
+    } else {
+      i += posts.length;
+    }
 
-    // Push the new post to the Global timeline
-    await redis.lpush("timeline", JSON.stringify(post));
-    await redis.ltrim("timeline", 0, 63);
+    for (const post of posts) {
+      // Push the new post to the Global timeline
+      await redis.lpush("timeline", JSON.stringify(post));
+      await redis.ltrim("timeline", 0, 63);
 
-    // Push the new post to the Follower's timeline
-    const followers = await fetchFollowers(post?.authorId ?? "");
-    for (const follower of followers) {
-      await redis.lpushx(`timeline:user:${follower.id}`, JSON.stringify(post));
-      await redis.ltrim(`timeline:user:${follower.id}`, 0, 63);
+      // Push the new post to the Follower's timeline
+      const followers = await fetchFollowers(post?.authorId ?? "");
+      for (const follower of followers) {
+        await redis.lpushx(
+          `timeline:user:${follower.id}`,
+          JSON.stringify(post)
+        );
+        await redis.ltrim(`timeline:user:${follower.id}`, 0, 63);
+      }
     }
   }
+  console.log("Seeding completed!");
+  return 0;
 }
 
 main();
