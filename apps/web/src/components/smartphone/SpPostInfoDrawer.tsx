@@ -9,8 +9,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Info, MessageCircle, MessageCircleDashed } from "lucide-react";
-import { Comment, GalleyPost, OnePost, sessionUser } from "@/lib/definitions";
+import { Info, MessageCircleDashed } from "lucide-react";
+import { Comment, OnePost, sessionUser } from "@/lib/definitions";
 import { useCursorById } from "@/lib/utils";
 import CommentLoadMore from "../detail/CommentLoadMore";
 import OneComment from "../detail/OneComment";
