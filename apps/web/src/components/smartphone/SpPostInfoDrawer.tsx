@@ -72,7 +72,7 @@ export const SpPostInfoDrawer = (props: Props) => {
       >
         <Info className="size-[32px] text-neutral-300 hover:text-neutral-200 cursor-pointer" />
       </DrawerTrigger>
-      <DrawerContent className="focus-visible:ring-transparent outline-none focus:ring-0 h-[85vh]">
+      <DrawerContent className="focus-visible:ring-transparent outline-none focus:ring-0 h-[83vh]">
         <DrawerHeader className="pb-0">
           <DrawerTitle className="border-b border-gray-200 pb-1">
             {post ? (
