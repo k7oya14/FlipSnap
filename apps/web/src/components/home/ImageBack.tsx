@@ -24,11 +24,13 @@ const ImageBack = (props: Props) => {
     relationship === UserRelationship.Me;
   return (
     <div>
-      <div className="overflow-hidden w-full h-auto hover:cursor-pointer sm:rounded-lg ">
+      <div className="overflow-hidden w-full h-auto hover:cursor-pointer rounded-3xl sm:rounded-md">
         <Image
           width={500}
           height={500}
-          className={`rounded-md  relative ${open || "filter blur-lg"}`}
+          className={`rounded-3xl sm:rounded-md relative ${
+            open || "filter blur-lg"
+          }`}
           style={{
             objectFit: "cover",
             width: "100%",
