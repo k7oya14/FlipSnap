@@ -81,7 +81,7 @@ const HomeGallery = (props: Props) => {
         ))}
       </div>
       {(postLimit || firstPosts.length < 12) && (
-        <div className="flex flex-col items-center w-1/2">
+        <div className="flex flex-col items-center w-1/2 mb-4">
           <BadgeCheck className="size-20 mb-2" />
           <p>You&apos;re all caught up</p>
         </div>
