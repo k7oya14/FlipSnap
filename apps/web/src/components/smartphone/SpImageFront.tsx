@@ -32,7 +32,7 @@ const SpImageFront = memo(function SpImageFront(props: Props) {
           src={post.imgFront}
         />
         <div
-          className={`absolute inset-x-0 bottom-0 h-full w-full bg-gradient-to-b from-transparent from-60% to-zinc-800 rounded-b-3xl `}
+          className={`absolute inset-x-0 bottom-0 h-full w-full bg-gradient-to-b from-transparent from-60% to-zinc-800 rounded-b-3xl`}
         >
           <StopPropagationDiv>
             <Link
