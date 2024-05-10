@@ -12,14 +12,16 @@ export const timeline: Handler = async (c) => {
   });
 
   if (myId) {
-    const posts = await redis.lrange(
+    const data = await redis.lrange(
       `timeline:user:${myId}`,
       skip,
       skip + take - 1
     );
+    const posts = data.filter((v) => v !== "");
     return c.json(posts);
   } else {
-    const posts = await redis.lrange("timeline", skip, skip + take - 1);
+    const data = await redis.lrange("timeline", skip, skip + take - 1);
+    const posts = data.filter((v) => v !== "");
     return c.json(posts);
   }
 };
