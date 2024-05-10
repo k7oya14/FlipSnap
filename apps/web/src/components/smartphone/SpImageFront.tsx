@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { memo } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
-import {  Post, sessionUser } from "@/lib/definitions";
+import { Post, sessionUser } from "@/lib/definitions";
 import StopPropagationDiv from "../StopPropagationDiv";
 import { SpPostInfoDrawer } from "./SpPostInfoDrawer";
 
@@ -31,7 +31,7 @@ const SpImageFront = memo(function SpImageFront(props: Props) {
         src={post.imgFront}
       />
       <div
-        className={`absolute inset-x-0 bottom-0 h-full w-full bg-gradient-to-b from-transparent from-60% to-zinc-800 rounded-b-3xl `}
+        className={`absolute inset-x-0 bottom-0 h-full w-full bg-gradient-to-b from-transparent from-60% to-zinc-800 rounded-b-3xl`}
       >
         <StopPropagationDiv>
           <Link
