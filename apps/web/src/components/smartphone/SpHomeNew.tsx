@@ -16,9 +16,8 @@ const SpHomeNew = async (props: Props) => {
   return (
     <div>
       {firstPosts.map((post: GalleyPost) => (
-        <div className="rounded-3xl m-2 shadow-lg">
+        <div key={post.id} className="rounded-3xl m-2 shadow-lg">
           <HomeFlipImage
-            key={post.id}
             post={post}
             myId={me?.id}
             containerStyle={{
