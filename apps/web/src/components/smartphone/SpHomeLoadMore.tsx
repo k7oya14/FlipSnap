@@ -10,12 +10,13 @@ import HomeFlipImage from "../home/HomeFlipImage";
 import SpImageFront from "./SpImageFront";
 
 type Props = {
+  timeline: boolean;
   skip: number;
   me: sessionUser | undefined;
 };
 
 const SpHomeLoadMore = (props: Props) => {
-  const { skip, me } = props;
+  const { timeline, skip, me } = props;
   const [posts, setPosts] = useState<Post[]>([]);
   const [postLimit, setPostLimit] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,7 +29,12 @@ const SpHomeLoadMore = (props: Props) => {
     if (inView && !postLimit) {
       const fetchMorePosts = async () => {
         setLoading(true);
-        const newPosts = await fetchTimeline(6, skip + posts.length);
+        let newPosts;
+        if (timeline) {
+          newPosts = await fetchTimeline(6, skip + posts.length, me?.id);
+        } else {
+          newPosts = await fetchTimeline(6, skip + posts.length);
+        }
         if (newPosts.length < 6) {
           setPostLimit(true);
         }

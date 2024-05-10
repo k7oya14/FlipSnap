@@ -5,12 +5,13 @@ import HomeFlipImage from "../home/HomeFlipImage";
 import SpImageFront from "./SpImageFront";
 
 type Props = {
+  timeline: boolean;
   firstPosts: Post[];
   me: sessionUser | undefined;
 };
 
 const SpHome = async (props: Props) => {
-  const { firstPosts, me } = props;
+  const { timeline, firstPosts, me } = props;
   return (
     <div>
       {firstPosts.map((post: Post, index) => (
@@ -27,7 +28,7 @@ const SpHome = async (props: Props) => {
           />
         </div>
       ))}
-      <SpHomeLoadMore skip={firstPosts.length} me={me} />
+      <SpHomeLoadMore timeline={timeline} skip={firstPosts.length} me={me} />
     </div>
   );
 };
