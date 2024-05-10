@@ -35,6 +35,9 @@ export async function fetchALatestPost(skip: number) {
 }
 
 async function main() {
+  // Delete all k-V in the Redis database
+  await redis.flushall();
+
   const count = await fetchCountPosts(0);
 
   for (let i = 0; i < count; i++) {
