@@ -20,6 +20,7 @@ import OneCommentSkeleton from "../skeleton/OneCommentSkeleton";
 import LikeButtonWithText from "../detail/LikeButtonWithText";
 import { Skeleton } from "../ui/skeleton";
 import SpHomeCaption from "./SpHomeCaption";
+import { formatDistance } from "date-fns";
 
 type Props = {
   postId: string;
@@ -57,7 +58,6 @@ export const SpPostInfoDrawer = (props: Props) => {
       const onePost = await fetchPost(postId, me?.id);
       const comments = await fetchComments(postId, 8);
       setPost(onePost);
-      setOptimisticComments([...comments]);
       setComments([...comments]);
       setLoading(false);
     }
@@ -74,18 +74,27 @@ export const SpPostInfoDrawer = (props: Props) => {
       <DrawerContent className="focus-visible:ring-transparent outline-none focus:ring-0 h-[70vh]">
         <DrawerHeader className="pb-0">
           <DrawerTitle className="border-b border-gray-200 pb-1">
-            {loading ? (
-              <Skeleton className="h-3 w-2/3" />
-            ) : (
+            {post ? (
               <>
-                <SpHomeCaption caption={post?.caption!} />
-                <LikeButtonWithText
-                  postId={postId}
-                  myId={me?.id}
-                  defaultLiked={post?.isLikedByMe!}
-                  initialCountLikes={post?._count?.likes!}
-                />
+                <SpHomeCaption caption={post.caption} />
+                <div className="flex items-center justify-between">
+                  <LikeButtonWithText
+                    postId={postId}
+                    myId={me?.id}
+                    defaultLiked={post.isLikedByMe}
+                    initialCountLikes={post._count.likes!}
+                  />
+                  <p className="block font-light text-xs text-gray-400">
+                    {formatDistance(
+                      new Date(),
+                      Date.parse(String(post.createdAt))
+                    )}{" "}
+                    ago
+                  </p>
+                </div>
               </>
+            ) : (
+              <Skeleton className="h-3 w-2/3" />
             )}
           </DrawerTitle>
         </DrawerHeader>

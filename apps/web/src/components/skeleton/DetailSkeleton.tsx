@@ -22,38 +22,6 @@ const DetailSkeleton = () => {
           <Skeleton className="w-full h-4 md:h-5 my-1 md:my-2" />
           <Skeleton className="w-1/3 h-4 md:h-5" />
         </div>
-        {/* <div className="flex-grow overflow-y-auto">
-	  <div className="flex items-start space-x-3 p-4">
-		<Avatar>
-		  <AvatarImage
-			alt="User avatar"
-			src="/placeholder.svg?height=32&width=32"
-		  />
-		  <AvatarFallback>U</AvatarFallback>
-		</Avatar>
-		<div>
-		  <p className="font-semibold">
-			username <span className="font-normal">comment text</span>
-		  </p>
-		  <p className="text-xs text-gray-500">2d</p>
-		</div>
-	  </div>
-	</div> */}
-        {/* <div className="flex items-center justify-between p-4 border-t">
-	  <div className="flex space-x-4">
-		<HeartIcon className="text-gray-600" />
-		<ReplyIcon className="text-gray-600" />
-		<SendIcon className="text-gray-600" />
-	  </div>
-	  <BookmarkIcon className="text-gray-600" />
-	</div>
-	<div className="px-4 pb-4">
-	  <p className="font-semibold">1,234 likes</p>
-	  <p className="text-xs text-gray-500">2 days ago</p>
-	</div>
-	<div className="px-4 pb-4">
-	  <Input placeholder="Add a comment..." type="text" />
-	</div> */}
       </div>
     </div>
   );
