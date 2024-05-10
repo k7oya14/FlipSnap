@@ -1,14 +1,14 @@
 import React from "react";
 import SpHome from "../smartphone/SpHome";
 import { auth } from "@/lib/auth";
-import { fetchLatestPosts } from "@/lib/fetch";
-import { GalleyPost } from "@/lib/definitions";
+import { fetchTimeline } from "@/lib/fetch";
 import HomeGallery from "./HomeGallery";
+import { Post } from "@/lib/definitions";
 
 const Home = async () => {
   const session = await auth();
-  const firstPosts = await fetchLatestPosts(12);
-  const firstPostThreeArrays: GalleyPost[][] = [[], [], []];
+  const firstPosts = await fetchTimeline(12);
+  const firstPostThreeArrays: Post[][] = [[], [], []];
   firstPosts.forEach((post, i) => {
     firstPostThreeArrays[i % 3] = [...firstPostThreeArrays[i % 3], post];
   });
@@ -21,7 +21,6 @@ const Home = async () => {
         <HomeGallery
           myId={session?.user.id}
           firstPosts={firstPostThreeArrays}
-          cursorId={firstPosts[firstPosts.length - 1].id}
         />
       </div>
     </>

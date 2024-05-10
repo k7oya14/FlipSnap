@@ -2,23 +2,21 @@
 
 import React, { useEffect, useState } from "react";
 import ImageFront from "./ImageFront";
-import { GalleyPost } from "@/lib/definitions";
-import { fetchMoreLatestPosts } from "@/lib/fetch";
+import { Post } from "@/lib/definitions";
+import { fetchTimeline } from "@/lib/fetch";
 import { useInView } from "react-intersection-observer";
 import { useCursorById } from "@/lib/utils";
 import HomeFlipImage from "./HomeFlipImage";
 
 type Props = {
-  firstPosts: GalleyPost[][];
+  firstPosts: Post[][];
   myId: string | undefined;
-  cursorId: string;
 };
 
 const HomeGallery = (props: Props) => {
-  const { firstPosts, myId, cursorId } = props;
+  const { firstPosts, myId } = props;
   const { cursorById } = useCursorById();
-  const [posts, setPosts] = useState<GalleyPost[][]>(firstPosts);
-  const [cursorPostId, setCursorPostId] = useState(cursorId);
+  const [posts, setPosts] = useState<Post[][]>(firstPosts);
   const [postLimit, setPostLimit] = useState(false);
   const { ref, inView } = useInView({
     threshold: 0,
@@ -28,12 +26,15 @@ const HomeGallery = (props: Props) => {
   useEffect(() => {
     if (inView && !postLimit) {
       const fetchMorePosts = async () => {
-        const newPosts = await fetchMoreLatestPosts(6, cursorPostId);
+        const newPosts = await fetchTimeline(
+          6,
+          posts[0].length + posts[1].length + posts[2].length
+        );
         if (newPosts.length < 6) {
           setPostLimit(true);
         }
-        const newPostsArray: GalleyPost[][] = [[], [], []];
-        newPosts.forEach((post: GalleyPost, i) => {
+        const newPostsArray: Post[][] = [[], [], []];
+        newPosts.forEach((post: Post, i) => {
           newPostsArray[i % 3] = [...newPostsArray[i % 3], post];
         });
 
@@ -42,7 +43,6 @@ const HomeGallery = (props: Props) => {
           [...prevPosts[1], ...newPostsArray[1]],
           [...prevPosts[2], ...newPostsArray[2]],
         ]);
-        setCursorPostId(cursorById(newPosts));
       };
       fetchMorePosts();
     }
@@ -50,9 +50,9 @@ const HomeGallery = (props: Props) => {
 
   return (
     <div className="lg:px-32 px-5 flex">
-      {posts.map((colPosts: GalleyPost[]) => (
+      {posts.map((colPosts: Post[]) => (
         <div key={colPosts[0].id} className="w-1/3 p-1 relative">
-          {colPosts.map((post: GalleyPost, index) => (
+          {colPosts.map((post: Post, index) => (
             <HomeFlipImage
               key={post.id}
               post={post}
