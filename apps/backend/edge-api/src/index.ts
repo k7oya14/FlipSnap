@@ -1,9 +1,13 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import { fetchLatestPosts } from "./lib/fetchLatestPosts";
 
-const app = new Hono()
+export type Env = {
+  UPSTASH_REDIS_REST_URL: string;
+  UPSTASH_REDIS_REST_TOKEN: string;
+};
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono<{ Bindings: Env }>();
 
-export default app
+app.get("/posts/latest", fetchLatestPosts);
+
+export default app;

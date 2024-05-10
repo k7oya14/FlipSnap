@@ -1,8 +1,9 @@
-name = "-"
+name = "flipsnap_edge_api"
 compatibility_date = "2023-12-01"
 
-# [vars]
-# MY_VAR = "my-variable"
+[vars]
+UPSTASH_REDIS_REST_URL = "https://apn1-teaching-unicorn-34564.upstash.io"
+UPSTASH_REDIS_REST_TOKEN = "AYcEASQgZTVhNTQ0MjAtMjU2My00M2ZlLWJlZmMtYWI5N2Q5YmE1M2NiNGJjZDM3YzAyZWE2NDUxNmI4OTAwNTc0M2EzYTljMWY="
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
