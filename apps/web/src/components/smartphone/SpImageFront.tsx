@@ -16,7 +16,7 @@ const SpImageFront = memo(function SpImageFront(props: Props) {
   const { me, index, post } = props;
 
   return (
-    <div className="">
+    <div className="-z-10">
       <div className="w-full group relative overflow-hidden hover:cursor-pointer">
         <Image
           width={500}
@@ -45,7 +45,7 @@ const SpImageFront = memo(function SpImageFront(props: Props) {
               </Avatar>
               <p className="text-lg">{post.author?.name}</p>
             </Link>
-            <div className="absolute bottom-1 right-[6px] z-10">
+            <div className="absolute bottom-1 right-[6px] z-0">
               <SpPostInfoDrawer postId={post.id} me={me} />
             </div>
           </StopPropagationDiv>
