@@ -9,7 +9,9 @@ const SpHomeCaption = ({ caption }: { caption: string }) => {
   };
   return (
     <p
-      className={`${fullCaption ? "" : "truncate"} hover:cursor-pointer`}
+      className={`${
+        fullCaption ? "" : "line-clamp-2"
+      } text-base hover:cursor-pointer text-left font-medium`}
       onClick={onClickCaption}
     >
       {caption}
