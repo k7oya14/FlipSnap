@@ -7,7 +7,8 @@ import { BadgeCheck } from "lucide-react";
 import { Card } from "../ui/card";
 import { fetchMoreLatestPosts } from "@/lib/fetch";
 import { GalleyPost, sessionUser } from "@/lib/definitions";
-import { SpHomePost } from "./SpHomePost";
+import HomeFlipImage from "../home/HomeFlipImage";
+import SpImageFront from "./SpImageFront";
 
 type Props = {
   cursorId: string;
@@ -44,8 +45,19 @@ const SpHomeLoadMore = (props: Props) => {
 
   return (
     <div>
-      {posts.map((post: GalleyPost) => (
-        <SpHomePost key={post.id} post={post} me={me} />
+      {posts.map((post: GalleyPost, index) => (
+        <div key={post.id} className="rounded-3xl m-2 shadow-lg">
+          <HomeFlipImage
+            post={post}
+            myId={me?.id}
+            containerStyle={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "0.5rem",
+            }}
+            frontComponent={<SpImageFront index={index} post={post} me={me} />}
+          />
+        </div>
       ))}
       <div className="h-[1px]" ref={ref}></div>
       {loading && !postLimit && (
