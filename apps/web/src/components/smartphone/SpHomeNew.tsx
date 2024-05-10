@@ -3,7 +3,7 @@ import SpHomeLoadMore from "./SpHomeLoadMore";
 import { GalleyPost, sessionUser } from "@/lib/definitions";
 import { useCursorById } from "@/lib/utils";
 import HomeFlipImage from "../home/HomeFlipImage";
-import ImageFront from "../home/ImageFront";
+import SpImageFront from "./SpImageFront";
 
 type Props = {
   firstPosts: GalleyPost[];
@@ -15,7 +15,7 @@ const SpHomeNew = async (props: Props) => {
   const { cursorById } = useCursorById();
   return (
     <div>
-      {firstPosts.map((post: GalleyPost) => (
+      {firstPosts.map((post: GalleyPost, index) => (
         <div key={post.id} className="rounded-3xl m-2 shadow-lg">
           <HomeFlipImage
             post={post}
@@ -25,7 +25,7 @@ const SpHomeNew = async (props: Props) => {
               height: "auto",
               borderRadius: "0.5rem",
             }}
-            frontComponent={<ImageFront mobile={true} index={0} post={post} />}
+            frontComponent={<SpImageFront index={index} post={post} me={me} />}
           />
         </div>
       ))}
