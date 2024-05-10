@@ -35,7 +35,6 @@ const HomeGallery = (props: Props) => {
         newPosts.forEach((post: Post, i) => {
           newPostsArray[i % 3] = [...newPostsArray[i % 3], post];
         });
-
         setPosts((prevPosts) => [
           [...prevPosts[0], ...newPostsArray[0]],
           [...prevPosts[1], ...newPostsArray[1]],
