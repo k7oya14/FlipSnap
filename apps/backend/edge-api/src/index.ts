@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { fetchLatestPosts } from "./lib/fetchLatestPosts";
+import { timeline } from "./lib/timeline";
 
 export type Env = {
   UPSTASH_REDIS_REST_URL: string;
@@ -8,6 +8,6 @@ export type Env = {
 
 const app = new Hono<{ Bindings: Env }>();
 
-app.get("/posts/latest", fetchLatestPosts);
+app.get("/timeline", timeline);
 
 export default app;

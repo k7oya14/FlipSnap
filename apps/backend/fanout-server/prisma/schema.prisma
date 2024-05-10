@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Account {
-  id                String  @id
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -21,86 +21,17 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
-model Comment {
-  id        String   @id
-  postId    String
-  authorId  String
-  content   String
-  createdAt DateTime @default(now())
-  User      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  @@index([postId, createdAt(sort: Desc)])
-}
-
-model Like {
-  userId    String
-  postId    String
-  createdAt DateTime @default(now())
-  Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([userId, postId])
-  @@index([postId])
-  @@index([userId, createdAt(sort: Desc)])
-}
-
-model Post {
-  id        String    @id
-  authorId  String
-  imgFront  String
-  imgBack   String
-  caption   String
-  createdAt DateTime  @default(now())
-  Comment   Comment[]
-  Like      Like[]
-  User      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-
-  @@index([authorId])
-  @@index([createdAt(sort: Desc)])
-}
-
 model Session {
-  id           String   @id
+  id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model User {
-  id                                                   String              @id
-  username                                             String?             @unique
-  email                                                String?             @unique
-  emailVerified                                        DateTime?
-  image                                                String?
-  name                                                 String?
-  bio                                                  String              @default("")
-  created_at                                           DateTime            @default(now())
-  Account                                              Account[]
-  Comment                                              Comment[]
-  Like                                                 Like[]
-  Post                                                 Post[]
-  Session                                              Session[]
-  User_User_Follows_User_User_Follows_followeeIdToUser User_User_Follows[] @relation("User_User_Follows_followeeIdToUser")
-  User_User_Follows_User_User_Follows_followerIdToUser User_User_Follows[] @relation("User_User_Follows_followerIdToUser")
-}
-
-model User_User_Follows {
-  followerId                              String
-  followeeId                              String
-  createdAt                               DateTime @default(now())
-  User_User_User_Follows_followeeIdToUser User     @relation("User_User_Follows_followeeIdToUser", fields: [followeeId], references: [id], onDelete: Cascade)
-  User_User_User_Follows_followerIdToUser User     @relation("User_User_Follows_followerIdToUser", fields: [followerId], references: [id], onDelete: Cascade)
-
-  @@id([followerId, followeeId])
-  @@index([followeeId, createdAt(sort: Desc)])
-  @@index([followerId, createdAt(sort: Desc)])
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -109,4 +40,73 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Post {
+  id        String    @id @default(uuid())
+  authorId  String
+  imgFront  String
+  imgBack   String
+  caption   String
+  createdAt DateTime  @default(now())
+  comments  Comment[]
+  likes     Like[]
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model User {
+  id            String              @id @default(cuid())
+  username      String?             @unique
+  email         String?             @unique
+  emailVerified DateTime?
+  image         String?
+  name          String?
+  bio           String              @default("")
+  created_at    DateTime            @default(now())
+  accounts      Account[]
+  comments      Comment[]
+  likes         Like[]
+  posts         Post[]
+  sessions      Session[]
+  followedBy    User_User_Follows[] @relation("FollowedBy")
+  following     User_User_Follows[] @relation("Following")
+}
+
+model User_User_Follows {
+  followerId String
+  followeeId String
+  createdAt  DateTime @default(now())
+  followee   User     @relation("FollowedBy", fields: [followeeId], references: [id], onDelete: Cascade)
+  follower   User     @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followeeId])
+  @@index([followerId, createdAt(sort: Desc)])
+  @@index([followeeId, createdAt(sort: Desc)])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  postId    String
+  authorId  String
+  content   String
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt(sort: Desc)])
+}
+
+model Like {
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, postId])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([postId])
 }
