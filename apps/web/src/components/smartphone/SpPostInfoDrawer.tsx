@@ -9,7 +9,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Info, MessageCircleDashed } from "lucide-react";
+import { Heart, Info, MessageCircleDashed } from "lucide-react";
 import { Comment, OnePost, sessionUser } from "@/lib/definitions";
 import { useCursorById } from "@/lib/utils";
 import CommentLoadMore from "../detail/CommentLoadMore";
@@ -21,6 +21,7 @@ import LikeButtonWithText from "../detail/LikeButtonWithText";
 import { Skeleton } from "../ui/skeleton";
 import SpHomeCaption from "./SpHomeCaption";
 import { formatDistance } from "date-fns";
+import Link from "next/link";
 
 type Props = {
   postId: string;
@@ -78,12 +79,24 @@ export const SpPostInfoDrawer = (props: Props) => {
               <>
                 <SpHomeCaption caption={post.caption} />
                 <div className="flex items-center justify-between">
-                  <LikeButtonWithText
-                    postId={postId}
-                    myId={me?.id}
-                    defaultLiked={post.isLikedByMe}
-                    initialCountLikes={post._count.likes!}
-                  />
+                  {me ? (
+                    <LikeButtonWithText
+                      postId={postId}
+                      myId={me?.id}
+                      defaultLiked={post.isLikedByMe}
+                      initialCountLikes={post._count.likes!}
+                    />
+                  ) : (
+                    <Link
+                      href="/profile/error"
+                      className="hover:cursor-pointer flex items-center my-2"
+                    >
+                      <Heart className="mr-[6px] size-[28px] fill-transparent text-gray-500 hover:text-gray-600" />
+                      <p className="text-lg text-gray-500">
+                        {post._count.likes}
+                      </p>
+                    </Link>
+                  )}
                   <p className="block font-light text-xs text-gray-400">
                     {formatDistance(
                       new Date(),
