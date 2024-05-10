@@ -11,6 +11,12 @@ Welcome to FlipSnap, the photo-sharing social networking service that redefines 
 
 パブリック性とクローズド性を兼ね備えた写真共有SNS。写真は表/裏の2枚1組で投稿し，表は誰でも閲覧可能だが，裏は相互フォローでないと閲覧できない。表ではオープンに発信しつつも、裏ではプライベートな共有ができる。1つの投稿で公開性と閉鎖性を両立させ，新たな体験価値を創出する。
 
+> Learn More : [About FlipSnap(Legacy) - Google Slides](https://docs.google.com/presentation/d/1nT-R3LLSaJre9aVunzU5bDOaMUMVbk9CG3p1ibkhiO8/edit?usp=sharing) </br>
+> ※ Note that the slide is created when the project was in its early stage (Legacy Version). It may not reflect the current state of the project.
+
+# ScreenShots
+![Screenshot](assets/Screenshot.jpg)
+
 # Tech Stack
 [![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/k7oya14/flipsnap)</br>
 フロントエンドはNext.jsベースでtailwindcssやFramerMotionなどで構築，
@@ -18,9 +24,11 @@ Welcome to FlipSnap, the photo-sharing social networking service that redefines 
 
 - **Frontend:** Next.js, tailwindcss, shadcn/ui, FramerMotion
 - **Backend:** Node.js, Hono.js, Zod, Prisma, NextAuth
-- **Infra:** Vercel, Cloudflare Workers, Fly.io
-- **DB:** supabase, Upstash Redi
+- **Infra:** Vercel, Cloudflare Workers, Fly.io, Docker
+- **DB:** supabase, Upstash Redis
 - **CI/CD:** Github Actions
+
+[Tech Stack Report](./techstack.md)
 
 
 # Authors
