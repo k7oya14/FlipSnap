@@ -10,28 +10,30 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Info, MessageCircle, MessageCircleDashed } from "lucide-react";
-import { Comment, GalleyPost, sessionUser } from "@/lib/definitions";
+import { Comment, GalleyPost, OnePost, sessionUser } from "@/lib/definitions";
 import { useCursorById } from "@/lib/utils";
 import CommentLoadMore from "../detail/CommentLoadMore";
 import OneComment from "../detail/OneComment";
 import CommentForm from "../detail/CommentForm";
-import { fetchComments } from "@/lib/fetch";
+import { fetchComments, fetchPost } from "@/lib/fetch";
 import OneCommentSkeleton from "../skeleton/OneCommentSkeleton";
+import LikeButtonWithText from "../detail/LikeButtonWithText";
+import { Skeleton } from "../ui/skeleton";
+import SpHomeCaption from "./SpHomeCaption";
 
 type Props = {
-  post: GalleyPost;
-  latestComments?: Comment[] | [];
+  postId: string;
   me: sessionUser | undefined;
 };
 
 export const SpPostInfoDrawer = (props: Props) => {
-  const { post, latestComments = [], me } = props;
+  const { postId, me } = props;
   const { cursorById } = useCursorById();
   const [loading, setLoading] = useState(false);
-  const [comments, setComments] = useState<Comment[]>(latestComments);
+  const [post, setPost] = useState<OnePost | undefined | null>(undefined);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [optimisticComments, setOptimisticComments] =
     useOptimistic<Comment[]>(comments);
-  const firstClick = useRef(true);
 
   const onSubmitComment = useCallback(async (commentContent: string) => {
     const optimisticComment: Comment = {
@@ -42,7 +44,7 @@ export const SpPostInfoDrawer = (props: Props) => {
       },
       id: crypto.randomUUID().toString(),
       authorId: me!.id,
-      postId: post.id,
+      postId: postId,
       content: commentContent,
       createdAt: new Date(),
     };
@@ -50,15 +52,16 @@ export const SpPostInfoDrawer = (props: Props) => {
   }, []);
 
   const fetchLatestCommnent = useCallback(async () => {
-    if (latestComments.length === 0 && firstClick.current) {
-      firstClick.current = false;
+    if (!post) {
       setLoading(true);
-      const comments = await fetchComments(post.id, 8);
-      setOptimisticComments([...latestComments, ...comments]);
-      setComments([...latestComments, ...comments]);
+      const onePost = await fetchPost(postId, me?.id);
+      const comments = await fetchComments(postId, 8);
+      setPost(onePost);
+      setOptimisticComments([...comments]);
+      setComments([...comments]);
       setLoading(false);
     }
-  }, [latestComments, post]);
+  }, [postId]);
 
   return (
     <Drawer>
@@ -70,8 +73,20 @@ export const SpPostInfoDrawer = (props: Props) => {
       </DrawerTrigger>
       <DrawerContent className="focus-visible:ring-transparent outline-none focus:ring-0 h-[70vh]">
         <DrawerHeader className="pb-0">
-          <DrawerTitle className="border-b border-gray-200 pb-5">
-            Comment
+          <DrawerTitle className="border-b border-gray-200 pb-1">
+            {loading ? (
+              <Skeleton className="h-3 w-2/3" />
+            ) : (
+              <>
+                <SpHomeCaption caption={post?.caption!} />
+                <LikeButtonWithText
+                  postId={postId}
+                  myId={me?.id}
+                  defaultLiked={post?.isLikedByMe!}
+                  initialCountLikes={post?._count?.likes!}
+                />
+              </>
+            )}
           </DrawerTitle>
         </DrawerHeader>
         <div
@@ -93,7 +108,7 @@ export const SpPostInfoDrawer = (props: Props) => {
               ))}
               {optimisticComments.length < 8 || (
                 <CommentLoadMore
-                  postId={post.id}
+                  postId={postId}
                   commentId={cursorById(comments)}
                 />
               )}
@@ -103,7 +118,7 @@ export const SpPostInfoDrawer = (props: Props) => {
         <DrawerFooter className="p-0">
           {me && (
             <CommentForm
-              postId={post.id}
+              postId={postId}
               me={me}
               onSubmit={onSubmitComment}
               setComments={setComments}

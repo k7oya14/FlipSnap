@@ -45,7 +45,7 @@ const SpImageFront = memo(function SpImageFront(props: Props) {
             <p className="text-lg">{post.author?.name}</p>
           </Link>
           <div className="absolute bottom-1 right-[6px]">
-            <SpPostInfoDrawer post={post} me={me} />
+            <SpPostInfoDrawer postId={post.id} me={me} />
           </div>
         </StopPropagationDiv>
       </div>
