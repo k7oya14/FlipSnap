@@ -45,7 +45,7 @@ const LikePostImageFront = (props: Props) => {
         }}
         width="293"
       />
-      <div className="absolute inset-x-0 bottom-0 h-full w-full transition-opacity duration-300 hover:bg-gradient-to-b from-transparent to-zinc-800 rounded-b">
+      <div className="absolute inset-x-0 bottom-0 h-full w-full transition-opacity duration-300 sm:hover:bg-gradient-to-b from-transparent to-zinc-800 rounded-b">
         <StopPropagationDiv>
           <LikePostInformation post={post} />
           <Link

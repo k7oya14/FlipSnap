@@ -64,7 +64,7 @@ const SpHomeLoadMore = (props: Props) => {
         <div className="mx-auto m-4 animate-spin size-10 border-4 border-slate-200 rounded-full border-t-transparent"></div>
       )}
       {postLimit && (
-        <Card className="flex flex-col items-center p-4 m-4 mx-auto w-96 max-w-[80vw]">
+        <Card className="flex flex-col items-center p-4 m-2 rounded-3xl shadow-md">
           <BadgeCheck className="size-20 mb-2" />
           <p>You&apos;re all caught up</p>
         </Card>
