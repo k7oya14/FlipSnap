@@ -3,7 +3,7 @@
 import React from "react";
 import { unstable_noStore as noStore } from "next/cache";
 import prisma from "./prismaClient";
-import { UserRelationship } from "./definitions";
+import { Post, UserRelationship } from "./definitions";
 
 export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -233,9 +233,7 @@ export async function fetchLatestPosts(
     }));
     const end = process.hrtime(start);
     console.log(
-      "[MY LOG] fetchLatestPosts >>> " +
-        (end[0] * 1e9 + end[1]) / 1e6 +
-        "ms"
+      "[MY LOG] fetchLatestPosts >>> " + (end[0] * 1e9 + end[1]) / 1e6 + "ms"
     );
     return posts;
   } catch (error) {
@@ -289,6 +287,30 @@ export async function fetchMoreLatestPosts(
     return posts;
   } catch (error) {
     throw new Error("Failed to fetch more latest posts.");
+  }
+}
+
+export async function fetchTimeline(
+  take: number,
+  skip?: number,
+  userId?: string | undefined
+) {
+  const url = new URL("https://flipsnap_edge_api.k7oya14.workers.dev/timeline");
+  url.searchParams.set("take", take.toString());
+  if (skip) {
+    url.searchParams.set("skip", skip.toString());
+  }
+  if (userId) {
+    url.searchParams.set("userId", userId);
+  }
+  noStore();
+  try {
+    console.log(url.toString());
+    const res = await fetch(url);
+    const json: Post[] = await res.json();
+    return json;
+  } catch (error) {
+    throw new Error("Failed to fetch Timeline.");
   }
 }
 
