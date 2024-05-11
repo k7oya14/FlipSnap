@@ -36,7 +36,7 @@ function CreatePostForm({ userId }: { userId: string }) {
         <h1 className="text-xl">Create Post</h1>
         <Camera className="w-8 h-8 text-black" />
       </CardHeader>
-      <CardContent className="p-0 h-[310px] w-full px-5">
+      <CardContent className="p-0 h-[360px] w-full px-5">
         <form
           action={(formData) => {
             if (!imgFront || !imgBack) return;

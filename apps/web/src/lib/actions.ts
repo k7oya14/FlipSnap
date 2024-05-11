@@ -139,6 +139,14 @@ export async function createPost(
 
   const { imgFront, imgBack, caption } = validatedFields.data;
 
+  console.log("Prevent a new post at web/src/lib/action.ts:143");
+  return {
+    errors: {
+      caption: ["New posts are paused.", "新規投稿を停止しています。"],
+    },
+    message: "Prevent a new post at createPost()",
+  };
+
   const [imgFrontUrl, imgBackUrl] = await Promise.all([
     uploadFile(imgFront),
     uploadFile(imgBack),

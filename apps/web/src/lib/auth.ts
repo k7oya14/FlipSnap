@@ -25,6 +25,14 @@ export const config = {
     newUser: "/signup", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      if ("created_at" in user) {
+        return true; // 既存ユーザーはログインを許可する
+      } else {
+        console.log("Prevent SignUp at web/src/lib/auth.ts:28");
+        return false; // 新規ユーザーはログインを許可しない
+      }
+    },
     async session({ session, token, user }) {
       return { ...session, user: { ...session.user, id: user.id } };
     },
