@@ -28,12 +28,14 @@ Welcome to FlipSnap, the photo-sharing social networking service that redefines 
 - **DB:** supabase, Upstash Redis
 - **CI/CD:** Github Actions
 
-[Tech Stack Report](./techstack.md)
+[Detailed Report](./techstack.md)
 
+## Architecture
+// 書く
 
 # Authors
 A list of the original co-authors.
-- From [team HiKs](https://github.com/team-hiks)
+- [team HiKs](https://github.com/team-hiks)
     - 坂　功弥 (Koya Saka) - Backend - [@k7oya14](https://github.com/k7oya14)
     - 石渡　輝(Hikaru Ishiwata) - Frontend - [@hishiwat](https://github.com/hishiwat)
 

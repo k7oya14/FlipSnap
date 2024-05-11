@@ -71,7 +71,7 @@ async function createFollowRelations(users: User[]) {
   }
 }
 
-const postUserCount = 20; // TODO : Change this parameter
+const postUserCount = 64; // TODO : Change this parameter
 
 async function createPost(users: User[]) {
   const posts = [];
@@ -100,7 +100,7 @@ async function createPost(users: User[]) {
   return posts;
 }
 
-const targetPostCount = postUserCount / 4; // TODO : Change this parameter
+const targetPostCount = postUserCount / 3; // TODO : Change this parameter
 
 async function createComments(users : User[], posts: string[]) {
   for (const user of users) {
