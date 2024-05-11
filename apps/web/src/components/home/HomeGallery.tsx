@@ -40,7 +40,6 @@ const HomeGallery = (props: Props) => {
             posts[0].length + posts[1].length + posts[2].length
           );
         }
-        console.log(posts[0].length + posts[1].length + posts[2].length);
         if (newPosts.length < 6) {
           setPostLimit(true);
         }

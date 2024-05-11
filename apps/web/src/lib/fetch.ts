@@ -192,12 +192,35 @@ export async function fetchPost(postId: string, myId?: string | undefined) {
 // const data3 = await fetchMoreLatestPosts(12, session?.user.id, cursorPostId);
 // ...
 
+export async function fetchTimeline(
+  take: number,
+  skip?: number,
+  userId?: string | undefined
+) {
+  const url = new URL("https://flipsnap_edge_api.k7oya14.workers.dev/timeline");
+  url.searchParams.set("take", take.toString());
+  if (skip) {
+    url.searchParams.set("skip", skip.toString());
+  }
+  if (userId) {
+    url.searchParams.set("userId", userId);
+  }
+  noStore();
+  try {
+    const res = await fetch(url);
+    const json: Post[] = await res.json();
+    return json;
+  } catch (error) {
+    throw new Error("Failed to fetch Timeline.");
+  }
+}
+
 export async function fetchLatestPosts(
   take: number,
   myId?: string | undefined
 ) {
   noStore();
-  const start = process.hrtime();
+  // const start = process.hrtime();
   try {
     const data = await prisma.post.findMany({
       orderBy: {
@@ -231,10 +254,10 @@ export async function fetchLatestPosts(
       ...post,
       isLikedByMe: post.likes.length > 0,
     }));
-    const end = process.hrtime(start);
-    console.log(
-      "[MY LOG] fetchLatestPosts >>> " + (end[0] * 1e9 + end[1]) / 1e6 + "ms"
-    );
+    // const end = process.hrtime(start);
+    // console.log(
+    //   "[MY LOG] fetchLatestPosts >>> " + (end[0] * 1e9 + end[1]) / 1e6 + "ms"
+    // );
     return posts;
   } catch (error) {
     throw new Error("Failed to fetch first latest posts.");
@@ -287,30 +310,6 @@ export async function fetchMoreLatestPosts(
     return posts;
   } catch (error) {
     throw new Error("Failed to fetch more latest posts.");
-  }
-}
-
-export async function fetchTimeline(
-  take: number,
-  skip?: number,
-  userId?: string | undefined
-) {
-  const url = new URL("https://flipsnap_edge_api.k7oya14.workers.dev/timeline");
-  url.searchParams.set("take", take.toString());
-  if (skip) {
-    url.searchParams.set("skip", skip.toString());
-  }
-  if (userId) {
-    url.searchParams.set("userId", userId);
-  }
-  noStore();
-  try {
-    console.log(url.toString());
-    const res = await fetch(url);
-    const json: Post[] = await res.json();
-    return json;
-  } catch (error) {
-    throw new Error("Failed to fetch Timeline.");
   }
 }
 
