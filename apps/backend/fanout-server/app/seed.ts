@@ -55,7 +55,7 @@ async function main() {
 
       const posts = data.map((post) => JSON.stringify(post));
       await redis.lpush("timeline", ...posts);
-      await redis.ltrim("timeline", 0, 63);
+      await redis.ltrim("timeline", 0,127);
     }
     console.log("Seeding completed!");
   } catch (error) {

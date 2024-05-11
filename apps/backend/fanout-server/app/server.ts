@@ -21,13 +21,13 @@ async function main() {
 
     // Push the new post to the Global timeline
     await redis.lpush("timeline", JSON.stringify(data));
-    await redis.ltrim("timeline", 0, 63);
+    await redis.ltrim("timeline", 0, 127);
 
     // Push the new post to the Follower's timeline
     const followers = await fetchFollowers(event.created.authorId);
     for (const follower of followers) {
       await redis.lpushx(`timeline:user:${follower.id}`, JSON.stringify(data));
-      await redis.ltrim(`timeline:user:${follower.id}`, 0, 63);
+      await redis.ltrim(`timeline:user:${follower.id}`, 0, 127);
     }
   }
 }
