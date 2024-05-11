@@ -9,7 +9,7 @@ const notoSansJp = Noto_Sans_JP({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "FlipSnap",
   description:
-    "Unlock a world of shared moments with FlipSnap. Share your favorite memories with friends and family.",
+    "FlipSnap by HiKs - Two Sides, One Post. Share the Moment Behind the Moment.",
 };
 
 export const viewport: Viewport = {
