@@ -34,6 +34,7 @@ const SpDetailImageBack = async (props: Props) => {
       />
       {open || (
         <LockedBack
+          detail={true}
           myId={myId}
           userId={post.authorId}
           relationship={relationship!}
