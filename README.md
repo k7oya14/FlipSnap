@@ -33,7 +33,9 @@ Welcome to FlipSnap, the photo-sharing social networking service that redefines 
 ## Architecture
 ![Twitter Architecture](assets/Twitter-architecture.png)
 Twitterのシステムを参考にし，フォローしているユーザーがPostしたら各ユーザーのタイムラインにキャッシュするPUSHベースのアーキテクチャを採用。その（サーバーサイド）キャッシュには，RedisのCache prefetchingを用いてFan-out Applicationを実装している。
-![redis Cache prefetching](assets/redis-CachePrefetching.jpg)
+<p align="center">
+    <img src="assets/redis-CachePrefetching.jpg" height="256"/>
+</p>
 
 # Authors
 A list of the original co-authors.
